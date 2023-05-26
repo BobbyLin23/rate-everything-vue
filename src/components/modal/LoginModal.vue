@@ -1,20 +1,30 @@
 <script setup lang='ts'>
 import { storeToRefs } from 'pinia'
+import { reactive } from 'vue'
 import Modal from './Modal.vue'
 import { useLoginModalStore } from '@/store/modules/loginModal'
 
 const loginModal = useLoginModalStore()
 const { isOpen } = storeToRefs(loginModal)
 const { close } = loginModal
+
+const form = reactive({
+  email: '',
+  password: '',
+})
+
+function handleSubmit() {
+
+}
 </script>
 
 <template>
   <Modal :show="isOpen" title="Sign In" @close="close">
-    <form class="space-y-6" action="#" method="POST">
+    <form class="space-y-6" action="#" method="POST" @submit="handleSubmit">
       <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
         <div class="mt-2">
-          <input id="email" name="email" type="email" autocomplete="email" required class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <input id="email" v-model="form.email" name="email" type="email" autocomplete="email" required class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         </div>
       </div>
       <div>
@@ -25,7 +35,7 @@ const { close } = loginModal
           </div>
         </div>
         <div class="mt-2">
-          <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <input id="password" v-model="form.password" name="password" type="password" required class="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         </div>
       </div>
       <div class="mb-2">
