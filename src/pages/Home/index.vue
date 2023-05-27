@@ -6,7 +6,6 @@ import LoginModal from '@/components/modal/LoginModal.vue'
 <template>
   <Header />
   <LoginModal />
-  <div>Home</div>
 </template>
 
 <style scoped></style>

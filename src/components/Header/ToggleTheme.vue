@@ -1,31 +1,17 @@
 <script setup lang='ts'>
-import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import IconSun from '~icons/carbon/sun'
 import IconMoon from '~icons/carbon/moon'
+import { useSettingStore } from '@/store/modules/settings'
 
-const isDark = ref(false)
-
-function toggleDark() {
-  document.documentElement.classList.toggle('dark')
-  isDark.value = !isDark.value
-}
-
-onMounted(() => {
-  if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark')
-    isDark.value = true
-  }
-  else {
-    document.documentElement.classList.remove('dark')
-    isDark.value = false
-  }
-})
+const settingStore = useSettingStore()
+const { isDark } = storeToRefs(settingStore)
 </script>
 
 <template>
   <div class="rounded-full bg-gray-200 p-2 cursor-pointer hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-500">
-    <IconSun v-if="!isDark" @click="toggleDark" />
-    <IconMoon v-else @click="toggleDark" />
+    <IconSun v-if="!isDark" @click="settingStore.toggleDark" />
+    <IconMoon v-else @click="settingStore.toggleDark" />
   </div>
 </template>
 
